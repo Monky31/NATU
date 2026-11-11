@@ -1,0 +1,117 @@
+<app-natu-header [enlaces]="[{ ruta: '/', texto: '🏠 Inicio' }]" />
+
+<main class="hero-section registration-page">
+  <div class="promo-text">
+    <h1>Recupera</h1>
+    <h1>tu</h1>
+    <h1>cuenta</h1>
+    <h1>en</h1>
+    <h1>NATU</h1>
+  </div>
+
+  <div class="registration-form-panel">
+    <div class="form-header">
+      <h2 class="form-title">RECUPERAR CONTRASEÑA</h2>
+    </div>
+
+    <!-- PASO 1: pedir código al correo -->
+    @if (paso() === 1) {
+      <form class="registration-form" (ngSubmit)="enviarCodigo()" #formularioEmail="ngForm">
+        <p class="white-text recovery-help">
+          Escribe el correo con el que te registraste. Te enviaremos un código de
+          verificación de 6 dígitos.
+        </p>
+
+        <label for="email" class="white-text">Correo electrónico</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="nombre@gmail.com"
+          autocomplete="email"
+          required
+          [(ngModel)]="email"
+        />
+
+        <nav class="user-actions">
+          <button type="submit" class="button is-black" [disabled]="enviando()">
+            {{ enviando() ? 'Enviando código...' : 'Enviar código' }}
+          </button>
+        </nav>
+      </form>
+    }
+
+    <!-- PASO 2: código + nueva contraseña -->
+    @if (paso() === 2) {
+      <form class="registration-form" (ngSubmit)="cambiarPassword()" #formularioReset="ngForm">
+        <p class="white-text recovery-help">
+          Escribe el código de 6 dígitos enviado a {{ emailSolicitado }}.
+        </p>
+
+        <label for="code" class="white-text">Código de verificación</label>
+        <input
+          type="text"
+          id="code"
+          name="code"
+          inputmode="numeric"
+          maxlength="6"
+          pattern="[0-9]{6}"
+          placeholder="123456"
+          autocomplete="one-time-code"
+          required
+          [(ngModel)]="codigo"
+        />
+
+        <label for="password" class="white-text">Nueva contraseña</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          minlength="6"
+          placeholder="Mínimo 6 caracteres"
+          autocomplete="new-password"
+          required
+          [(ngModel)]="password"
+        />
+
+        <label for="confirmPassword" class="white-text">Confirmar contraseña</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          minlength="6"
+          placeholder="Repite la nueva contraseña"
+          autocomplete="new-password"
+          required
+          [(ngModel)]="confirmPassword"
+        />
+
+        <nav class="user-actions">
+          <button type="submit" class="button is-black">Cambiar contraseña</button>
+          <button
+            type="button"
+            class="button is-link"
+            [disabled]="reenviando()"
+            (click)="reenviar()"
+          >
+            {{ reenviando() ? 'Reenviando...' : 'Reenviar código' }}
+          </button>
+        </nav>
+
+        <button type="button" class="recovery-link" (click)="usarOtroCorreo()">
+          Usar otro correo
+        </button>
+      </form>
+    }
+
+    @if (mensaje()) {
+      <div class="notification {{ tipoMensaje() }}" id="responseMessage">
+        {{ mensaje() }}
+      </div>
+    }
+
+    <div class="footer-text">
+      <a routerLink="/iniciar-sesion">⬅ Volver al inicio de sesión</a>
+    </div>
+  </div>
+</main>

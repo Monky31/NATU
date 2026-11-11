@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias Sísmicas de Colombia - NATU</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="styles/Sismos1.css">
+    <link rel="stylesheet" href="styles/Navegacion.css">
+    <link rel="stylesheet" href="styles/Noticias.css">
+</head>
+<body class="noticias-body">
+    <header class="main-header">
+        <div class="logo-container">
+            <span class="logo-icon">🌿</span>
+            <span class="logo-text">NATU</span>
+        </div>
+
+        <div class="header-actions" data-nav-autologout>
+            <a href="Sismos.html" class="nav-btn">🏠 Inicio</a>
+            <a href="Mapa.html" class="nav-btn">🗺️ Mapa</a>
+            <a href="Informacion.html" class="nav-btn">📘 Información</a>
+            <button type="button" class="nav-btn" data-nav="back">← Volver</button>
+        </div>
+    </header>
+
+    <main class="noticias-page">
+        <section class="noticias-hero">
+            <p class="noticias-kicker">🌎 Monitoreo en tiempo real</p>
+            <h1>Noticias sísmicas de Colombia</h1>
+            <p class="noticias-intro">
+                Los sismos más relevantes reportados por el USGS y las noticias más recientes
+                de medios colombianos, reunidos automáticamente en un solo lugar. La página se
+                actualiza sola cuando aparece un sismo nuevo; si no, una vez al día.
+            </p>
+
+            <div class="noticias-status">
+                <span id="ultima-actualizacion">Cargando información...</span>
+                <button type="button" id="actualizar-btn" class="noticias-refresh">
+                    🔄 Actualizar ahora
+                </button>
+            </div>
+
+            <div id="aviso-nuevo-sismo" class="noticias-aviso" role="status" hidden></div>
+        </section>
+
+        <section class="noticias-section" aria-labelledby="sismos-title">
+            <div class="noticias-section-head">
+                <div>
+                    <h2 id="sismos-title">🌋 Sismos recientes en Colombia</h2>
+                    <p>Sismos de magnitud 3 o superior reportados en los últimos 60 días.</p>
+                </div>
+                <a href="https://earthquake.usgs.gov/earthquakes/map/?extent=-4.5,-82,13.5,-66"
+                   target="_blank" rel="noopener noreferrer">
+                    Ver mapa del USGS ↗
+                </a>
+            </div>
+
+            <div id="sismos-lista" class="sismos-grid" aria-live="polite">
+                <div class="noticias-loading">Cargando sismos...</div>
+            </div>
+        </section>
+
+        <section class="noticias-section" aria-labelledby="noticias-title">
+            <div class="noticias-section-head">
+                <div>
+                    <h2 id="noticias-title">📰 Últimas noticias</h2>
+                    <p>Titulares recientes sobre sismos y temblores en Colombia.</p>
+                </div>
+                <a href="https://news.google.com/search?q=temblor%20Colombia&hl=es-CO&gl=CO&ceid=CO:es"
+                   target="_blank" rel="noopener noreferrer">
+                    Ver más en Google Noticias ↗
+                </a>
+            </div>
+
+            <div id="noticias-lista" class="noticias-grid" aria-live="polite">
+                <div class="noticias-loading">Cargando noticias...</div>
+            </div>
+        </section>
+
+        <section class="fuentes-box">
+            <h2>Fuentes en tiempo real</h2>
+            <p>La información de esta página se obtiene de servicios públicos y se actualiza automáticamente.</p>
+
+            <div class="fuentes-links">
+                <a href="https://earthquake.usgs.gov/earthquakes/map/" target="_blank" rel="noopener noreferrer">
+                    🇺🇸 USGS
+                </a>
+                <a href="https://www.sgc.gov.co/sismos" target="_blank" rel="noopener noreferrer">
+                    🇨🇴 SGC
+                </a>
+                <a href="https://news.google.com/search?q=temblor%20Colombia&hl=es-CO&gl=CO&ceid=CO:es"
+                   target="_blank" rel="noopener noreferrer">
+                    📰 Google Noticias
+                </a>
+            </div>
+
+            <p class="fuentes-nota">
+                NATU es un proyecto académico. La información puede tardar en actualizarse y no
+                sustituye los reportes oficiales del Servicio Geológico Colombiano.
+            </p>
+        </section>
+    </main>
+
+    <script src="script/Navegacion.js"></script>
+    <script src="script/Noticias.js"></script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+/* ============================
+   PÁGINA DE NOTICIAS SÍSMICAS
+   ============================ */
+
+.noticias-body {
+    background: #eef2f7;
+    color: #0f172a;
+}
+
+.noticias-body .main-header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 16px 6vw;
+    background: rgba(15, 23, 42, 0.96);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 50;
+}
+
+.noticias-page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 32px 5vw 60px;
+}
+
+/* Hero */
+.noticias-hero {
+    background:
+        radial-gradient(circle at top right, rgba(74, 222, 128, 0.22), transparent 45%),
+        linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+    color: #fff;
+    border-radius: 24px;
+    padding: clamp(26px, 5vw, 46px);
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+}
+
+.noticias-kicker {
+    color: #86efac;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.noticias-hero h1 {
+    color: #fff;
+    text-align: left;
+    margin: 10px 0 12px;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    line-height: 1.1;
+}
+
+.noticias-intro {
+    color: #cbd5e1;
+    max-width: 760px;
+    line-height: 1.65;
+}
+
+.noticias-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 26px;
+}
+
+.noticias-aviso {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border: 1px solid rgba(74, 222, 128, 0.6);
+    border-left: 5px solid #22c55e;
+    border-radius: 12px;
+    background: rgba(34, 197, 94, 0.16);
+    color: #bbf7d0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    animation: noticias-aviso-entrada 0.3s ease;
+}
+
+@keyframes noticias-aviso-entrada {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#ultima-actualizacion {
+    color: #94a3b8;
+    font-size: 0.88rem;
+}
+
+.noticias-refresh {
+    border: none;
+    border-radius: 999px;
+    padding: 11px 20px;
+    background: #22c55e;
+    color: #052e16;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.noticias-refresh:hover {
+    background: #4ade80;
+    transform: translateY(-2px);
+}
+
+.noticias-refresh:disabled {
+    opacity: 0.65;
+    cursor: wait;
+    transform: none;
+}
+
+/* Secciones */
+.noticias-section {
+    margin-top: 40px;
+}
+
+.noticias-section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.noticias-section-head h2 {
+    margin: 0 0 5px;
+    font-size: 1.45rem;
+    color: #0f172a;
+}
+
+.noticias-section-head p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.noticias-section-head a {
+    color: #15803d;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.noticias-section-head a:hover {
+    text-decoration: underline;
+}
+
+/* Tarjetas de sismos */
+.sismos-grid,
+.noticias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+    gap: 16px;
+}
+
+.sismo-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-top: 5px solid var(--sismo-color, #f59e0b);
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sismo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.sismo-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.sismo-mag {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--sismo-color, #f59e0b);
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 800;
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.16);
+}
+
+.sismo-place {
+    color: #0f172a;
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.sismo-date {
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.sismo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.sismo-pill {
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.sismo-link,
+.noticia-link {
+    margin-top: auto;
+    color: #1d4ed8;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.sismo-link:hover,
+.noticia-link:hover {
+    text-decoration: underline;
+}
+
+/* Tarjetas de noticias */
+.noticia-card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid #16a34a;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.noticia-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.noticia-source {
+    color: #15803d;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.noticia-card h3 {
+    margin: 8px 0 12px;
+    color: #0f172a;
+    font-size: 1.02rem;
+    line-height: 1.45;
+}
+
+.noticia-date {
+    margin-bottom: 12px;
+    color: #64748b;
+    font-size: 0.8rem;
+}
+
+/* Estados de carga y error */
+.noticias-loading,
+.noticias-error,
+.noticias-vacio {
+    grid-column: 1 / -1;
+    padding: 22px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 16px;
+    background: #fff;
+    color: #64748b;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.noticias-loading {
+    animation: noticias-pulse 1.4s ease-in-out infinite;
+}
+
+.noticias-error {
+    border-color: #fecaca;
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.noticias-error a,
+.noticias-vacio a {
+    color: inherit;
+    font-weight: 700;
+}
+
+@keyframes noticias-pulse {
+    0%, 100% { opacity: 0.65; }
+    50% { opacity: 1; }
+}
+
+/* Fuentes */
+.fuentes-box {
+    margin-top: 44px;
+    padding: 26px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.fuentes-box h2 {
+    margin-bottom: 8px;
+    color: #0f172a;
+    font-size: 1.2rem;
+}
+
+.fuentes-box p {
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.fuentes-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0;
+}
+
+.fuentes-links a {
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: #0f172a;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.fuentes-links a:hover {
+    background: #15803d;
+}
+
+.fuentes-nota {
+    color: #94a3b8 !important;
+    font-size: 0.8rem !important;
+}
+
+@media (max-width: 700px) {
+    .noticias-body .main-header {
+        position: relative;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px 20px;
+    }
+
+    .noticias-page {
+        padding: 22px 18px 45px;
+    }
+
+    .noticias-hero {
+        border-radius: 18px;
+    }
+
+    .noticias-status {
+        align-items: flex-start;
+    }
+
+    .noticias-section-head {
+        align-items: flex-start;
+    }
+}

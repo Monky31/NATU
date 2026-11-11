@@ -1,0 +1,46 @@
+<app-natu-header [enlaces]="[{ ruta: '/', texto: '🏠 Inicio' }]" />
+
+<main class="hero-section registration-page">
+  <div class="promo-text">
+    <h1>Inicia sesion</h1>
+    <h1>para</h1>
+    <h1>descubrir</h1>
+    <h1>este</h1>
+    <h1>gran mundo</h1>
+  </div>
+
+  <div class="registration-form-panel">
+    <div class="form-header">
+      <h2 class="form-title">INICIAR SESION</h2>
+    </div>
+
+    <form class="registration-form" (ngSubmit)="iniciarSesion()" #formulario="ngForm">
+      <label for="username" class="white-text">Nombre De Usuario</label>
+      <input type="text" id="username" name="username" required [(ngModel)]="username" />
+
+      <label for="password" class="white-text">Contraseña</label>
+      <input type="password" id="password" name="password" required [(ngModel)]="password" />
+
+      <p class="white-text" style="font-size:0.8em; opacity:0.85; margin-bottom:10px;">
+        Al iniciar sesión enviaremos un aviso al correo con el que te registraste.
+      </p>
+
+      <p class="forgot-password-link">
+        <a routerLink="/olvida-contrasena" class="white-text">¿Olvidaste tu contraseña?</a>
+      </p>
+
+      <nav class="user-actions">
+        <button type="submit" class="button is-black" [disabled]="enviando()">
+          {{ enviando() ? 'Enviando aviso...' : 'Continuar' }}
+        </button>
+        <a routerLink="/registro" class="button is-link">Registrarse</a>
+      </nav>
+
+      @if (mensaje()) {
+        <div class="notification {{ tipoMensaje() }}" id="responseMessage" style="white-space: pre-line;">
+          {{ mensaje() }}
+        </div>
+      }
+    </form>
+  </div>
+</main>

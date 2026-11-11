@@ -1,0 +1,5 @@
+/* Estilos globales de la aplicación.
+   Los estilos de las páginas (Sismos1, Navegacion, Informacion, Noticias)
+   están registrados en angular.json, igual que leaflet.css.
+   Los estilos exclusivos del mapa que Angular no puede encapsular
+   (elementos creados por Leaflet en tiempo real) están en styles/mapa-global.css. */

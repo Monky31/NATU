@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="map-topbar">
+    <button type="button" class="nav-btn" (click)="volver()">← Volver</button>
+    <a routerLink="/" class="nav-btn">🏠 Inicio</a>
+    <a routerLink="/informacion" class="nav-btn">📘 Información</a>
+    <a routerLink="/noticias" class="nav-btn">📰 Noticias</a>
+    <a routerLink="/datos" class="nav-btn">🗄️ Datos</a>
+    <button type="button" class="nav-btn nav-btn-danger" (click)="cerrarSesion()">Cerrar sesión</button>
+  </div>
+
+  <h1>🇨🇴 Mapa Interactivo de Colombia - Simulador de Sismos</h1>
+  <p class="subtitle">Mueve el cursor sobre el mapa para ver las coordenadas y simula sismos</p>
+
+  <div class="map-wrapper">
+    <div id="map" #mapaDiv></div>
+
+    <div class="coordinates-display">
+      <div>
+        <span class="coord-label">Latitud:</span>
+        <span class="coord-value">{{ lat() }}</span>
+      </div>
+      <div>
+        <span class="coord-label">Longitud:</span>
+        <span class="coord-value">{{ lng() }}</span>
+      </div>
+    </div>
+
+    <div class="controls-panel">
+      <h3>⚙️ Control de Sismos</h3>
+
+      @if (alerta()) {
+        <p class="control-alert">{{ alerta() }}</p>
+      }
+
+      <div class="control-group">
+        <label>
+          Magnitud (Richter):
+          <span class="value-display">{{ magnitude() }}</span>
+          <span class="quake-tag">{{ magLabel() }}</span>
+        </label>
+        <input
+          type="range"
+          id="magnitude"
+          min="2"
+          max="8.5"
+          step="0.1"
+          [value]="magnitude()"
+          (input)="cambiarMagnitud($event)"
+        />
+      </div>
+
+      <div class="control-group">
+        <label>
+          Profundidad (km):
+          <span class="value-display">{{ depth() }}</span>
+          <span class="quake-tag">{{ depthType() }}</span>
+        </label>
+        <input
+          type="range"
+          id="depth"
+          min="5"
+          max="700"
+          step="5"
+          [value]="depth()"
+          (input)="cambiarProfundidad($event)"
+        />
+      </div>
+
+      <div class="control-group">
+        <label>Duración (seg):</label>
+        <input
+          type="number"
+          id="duration"
+          min="1"
+          max="60"
+          [value]="duration()"
+          (input)="cambiarDuracion($event)"
+        />
+      </div>
+
+      <button class="btn btn-simulate" type="button" [disabled]="simulando()" (click)="simularSismo()">
+        {{ simulando() ? '🌋 Simulando...' : '🌋 Simular Sismo' }}
+      </button>
+      <button class="btn btn-stop" type="button" (click)="detenerSimulacion()">⏹️ Detener</button>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <p><strong>💡 Instrucciones:</strong> Pasa el mouse sobre el mapa para ver las coordenadas geográficas.</p>
+    <p><strong>📍 Epicentro:</strong> Haz clic en cualquier punto del mapa para marcar el epicentro. El círculo muestra el área aproximada de sacudida según la magnitud y la profundidad (calculada con una relación sísmica realista).</p>
+    <p><strong>🎚️ Ajustes en tiempo real:</strong> Cambia la magnitud o profundidad para ver cómo se modifica el área afectada. A mayor profundidad, menor es la sacudida en superficie.</p>
+    <p><strong>🌋 Simulación:</strong> Presiona "Simular Sismo" para ver la propagación de ondas sísmicas.</p>
+    <p><strong>🔍 Zoom:</strong> Usa la rueda del mouse o los botones + / - para acercar o alejar el mapa.</p>
+  </div>
+</div>

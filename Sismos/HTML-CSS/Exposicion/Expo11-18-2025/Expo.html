@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación Proyecto NATU</title>
+    <style>
+        /* --- ESTILOS GENERALES --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #2c3e35; /* Verde oscuro y terroso */
+            color: #e8e8e8; /* Blanco roto para mejor legibilidad */
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 50px;
+            font-size: 18px; /* Letra ampliada para exposición */
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slide.active {
+            display: flex;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 4em;
+            margin-bottom: 15px;
+            color: #d4a574; /* Terracota/ocre cálido */
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #d4a574; /* Terracota/ocre cálido */
+            font-weight: 600;
+        }
+
+        p, li {
+            font-size: 1.4em;
+            max-width: 900px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+        
+        strong {
+            color: #d4a574; /* Resaltado en el mismo color principal */
+            font-weight: 600;
+        }
+
+        ul {
+            list-style: none;
+            text-align: left;
+            max-width: 900px;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+            padding-left: 1.2em;
+        }
+
+        ul li::before {
+            content: "▶";
+            color: #a4a478; /* Verde oliva/salvia para los marcadores */
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1.2em;
+        }
+
+        .authors {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #b0b0b0;
+            font-weight: 300;
+        }
+
+        /* --- ESTILOS ESPECÍFICOS --- */
+        
+        /* DOFA Slide */
+        .dofa-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            height: 60vh;
+            margin-top: 20px;
+        }
+        .dofa-quadrant {
+            border: 2px solid #d4a574;
+            padding: 25px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .dofa-quadrant:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .dofa-quadrant h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .dofa-quadrant ul {
+            font-size: 0.9em;
+        }
+        .dofa-quadrant.positive {
+            background-color: rgba(212, 165, 116, 0.1); /* Fondo sutil con color principal */
+        }
+        .dofa-quadrant.negative {
+            background-color: rgba(60, 60, 60, 0.2); /* Fondo gris oscuro para contraste */
+            border-color: #888;
+        }
+        .dofa-quadrant.negative h3 {
+            color: #aaa;
+        }
+        
+        /* Context Slide */
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .data-box {
+            background-color: rgba(164, 164, 120, 0.1); /* Fondo con color secundario */
+            border-left: 5px solid #a4a478;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .data-box h4 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        .data-box p {
+            font-size: 1.1em;
+            margin-bottom: 0;
+        }
+
+        /* --- DIAPOSITIVAS DE DESARROLLO (NUEVAS) --- */
+        .slide { overflow-y: auto; }
+
+        .slide p.compacto { font-size: 1.05em; }
+
+        .tag-archivo {
+            display: inline-block;
+            font-size: 0.68em;
+            background: #d4a574;
+            color: #2c3e35;
+            padding: 3px 10px;
+            border-radius: 999px;
+            margin-left: 10px;
+            vertical-align: middle;
+            font-weight: 700;
+        }
+
+        /* Flujo de autenticación */
+        .flow-container {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 25px auto 20px;
+            max-width: 1100px;
+            width: 100%;
+        }
+        .flow-step {
+            background: rgba(212, 165, 116, 0.1);
+            border: 2px solid #d4a574;
+            border-radius: 12px;
+            padding: 14px 16px;
+            flex: 1 1 170px;
+            max-width: 220px;
+        }
+        .flow-step h4 { color: #d4a574; font-size: 1.05em; margin-bottom: 6px; }
+        .flow-step p { font-size: 0.85em; margin: 0; line-height: 1.45; color: #cfd6cd; }
+        .flow-file {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.72em;
+            background: rgba(164, 164, 120, 0.3);
+            padding: 3px 10px;
+            border-radius: 999px;
+            color: #e8e8e8;
+        }
+        .flow-arrow { align-self: center; font-size: 1.8em; color: #a4a478; font-weight: 700; }
+
+        /* Tarjetas de características */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            max-width: 1050px;
+            width: 100%;
+            margin: 22px auto;
+            text-align: left;
+        }
+        .feature-card {
+            background: rgba(164, 164, 120, 0.1);
+            border-left: 5px solid #a4a478;
+            border-radius: 10px;
+            padding: 18px 22px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        .feature-card h4 { color: #ffffff; font-size: 1.2em; margin-bottom: 10px; }
+        .feature-card p, .feature-card li { font-size: 1em; margin-bottom: 8px; }
+        .feature-card ul { max-width: none; }
+
+        .demo-hint {
+            margin: 20px auto 0;
+            max-width: 900px;
+            font-size: 0.95em;
+            color: #cfd6cd;
+            background: rgba(164, 164, 120, 0.12);
+            border: 1px dashed #a4a478;
+            padding: 12px 18px;
+            border-radius: 10px;
+        }
+
+        /* Maqueta de controles del simulador */
+        .control-row {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px auto;
+            max-width: 1000px;
+            width: 100%;
+        }
+        .control-mock {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #a4a478;
+            border-radius: 12px;
+            padding: 14px 20px;
+            flex: 1 1 220px;
+            max-width: 280px;
+        }
+        .control-mock h5 { color: #d4a574; font-size: 1em; margin-bottom: 6px; }
+        .control-mock .mock-slider {
+            position: relative;
+            height: 6px;
+            background: #55605a;
+            border-radius: 3px;
+            margin: 12px 0 8px;
+        }
+        .control-mock .mock-slider::after {
+            content: '';
+            position: absolute;
+            left: 55%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #d4a574;
+            box-shadow: 0 0 10px rgba(212, 165, 116, 0.6);
+        }
+        .control-mock .mock-value { font-size: 0.82em; color: #cfd6cd; }
+
+        /* --- Circuitos eléctricos y electrónicos --- */
+        .circuit-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            width: 100%;
+            max-width: 1180px;
+            margin: 14px auto 0;
+            text-align: left;
+        }
+        .circuit-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(164, 164, 120, 0.1);
+            border: 1px solid rgba(164, 164, 120, 0.4);
+            border-left: 5px solid #a4a478;
+            border-radius: 12px;
+            padding: 12px 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        .circuit-card .diagram { flex: 0 0 132px; }
+        .circuit-card .diagram svg { width: 100%; height: auto; display: block; }
+        .circuit-card h4 { color: #ffffff; font-size: 1em; margin-bottom: 5px; }
+        .circuit-card p { font-size: 0.8em; line-height: 1.45; margin: 0; color: #cfd6cd; }
+        .circuit-card p strong { color: #d4a574; }
+
+        /* --- Demo de circuitos --- */
+        .circuit-demo-grid {
+            display: grid;
+            grid-template-columns: 1.45fr 1fr;
+            gap: 16px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 12px auto 0;
+            text-align: left;
+        }
+        .demo-box {
+            display: flex;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.32);
+            border: 1px solid rgba(164, 164, 120, 0.45);
+            border-radius: 14px;
+            padding: 12px 16px;
+        }
+        .demo-box h4 { color: #d4a574; font-size: 1em; margin-bottom: 8px; }
+        .demo-box .demo-controls { margin-bottom: 8px; gap: 10px; }
+        .demo-box .demo-controls label { font-size: 0.78em; }
+        .demo-box .demo-controls input[type="range"] { width: 92px; }
+        .circuit-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: rgba(0, 0, 0, 0.18);
+            border-radius: 10px;
+        }
+        .demo-box .demo-readouts { margin-top: 10px; gap: 8px; }
+        .demo-box .readout { padding: 6px 10px; }
+        .demo-box .readout .r-label { font-size: 0.6em; }
+        .demo-box .readout .r-value { font-size: 0.95em; }
+        .demo-box .demo-legend { font-size: 0.72em; margin-top: 8px; }
+        .demo-controls button.activo { background: #d4a574; color: #2c3e35; }
+        .demo-controls button.inactivo { background: rgba(164, 164, 120, 0.25); color: #e8e8e8; }
+        .readout.activo { border-color: #4cd964; background: rgba(30, 100, 50, 0.3); }
+        .readout.activo .r-value { color: #7dffa0; font-weight: 700; }
+
+        /* Demo interactiva */
+        .demo-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .demo-controls label {
+            font-size: 0.9em;
+            color: #cfd6cd;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .demo-controls input[type="range"] { accent-color: #d4a574; width: 150px; }
+        .demo-controls select {
+            background: #3a443c;
+            color: #e8e8e8;
+            border: 1px solid #a4a478;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-family: inherit;
+            font-size: 0.9em;
+        }
+        .demo-controls button {
+            background: #d4a574;
+            color: #2c3e35;
+            border: none;
+            border-radius: 8px;
+            padding: 9px 16px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+        .demo-controls button:hover { transform: translateY(-2px); background: #e0b78e; }
+        .demo-controls button.secundario { background: rgba(164, 164, 120, 0.35); color: #e8e8e8; }
+
+        .demo-legend { font-size: 0.8em; color: #a4a478; margin-top: 8px; line-height: 1.5; }
+
+        .demo-readouts { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+        .readout {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(164, 164, 120, 0.5);
+            border-radius: 10px;
+            padding: 8px 14px;
+        }
+        .readout .r-label {
+            display: block;
+            font-size: 0.68em;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #a4a478;
+            margin-bottom: 3px;
+        }
+        .readout .r-value {
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 1.1em;
+            color: #ffffff;
+        }
+        .readout.alarm { border-color: #ff6b6b; background: rgba(140, 30, 30, 0.35); }
+        .readout.alarm .r-value { color: #ff8f8f; font-weight: 700; }
+
+        /* --- Sismógrafo de la demo --- */
+        .sismografo-box { grid-column: 1 / -1; }
+        .sismografo-box h4 { margin-bottom: 6px; }
+        .demo-box .sismo-controls { margin-bottom: 6px; }
+        .sismo-controls label { font-size: 0.74em; }
+        .sismo-controls input[type="range"] { width: 104px; }
+        #demo-canvas {
+            width: 100%;
+            height: 84px;
+            display: block;
+            background: rgba(0, 0, 0, 0.22);
+            border: 1px solid rgba(164, 164, 120, 0.25);
+            border-radius: 10px;
+        }
+        #demo-leds {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            margin-top: 5px;
+        }
+        #demo-leds span {
+            width: 16px;
+            height: 7px;
+            border-radius: 2px;
+            background: rgba(164, 164, 120, 0.18);
+            border: 1px solid rgba(164, 164, 120, 0.35);
+            transition: background 0.12s ease, box-shadow 0.12s ease;
+        }
+        #demo-leds span.on {
+            background: #d4a574;
+            border-color: #d4a574;
+            box-shadow: 0 0 7px rgba(212, 165, 116, 0.65);
+        }
+        .demo-box .sismo-readouts { margin-top: 6px; gap: 8px; }
+        .sismo-readouts .readout { padding: 5px 10px; }
+        .sismo-readouts .r-label { font-size: 0.56em; }
+        .sismo-readouts .r-value { font-size: 0.86em; }
+        #slide-demo h2 { margin-bottom: 16px; }
+        #slide-demo .circuit-svg { max-height: 280px; }
+
+        /* Estilos de vinculación con celular (Diapo 8) */
+        .btn-celular {
+            display: inline-flex !important;
+            align-items: center;
+            gap: 6px;
+            background: rgba(212, 165, 116, 0.15) !important;
+            border: 1px solid #d4a574 !important;
+            color: #d4a574 !important;
+            font-weight: 600 !important;
+        }
+        .btn-celular:hover {
+            background: rgba(212, 165, 116, 0.3) !important;
+        }
+        .dot-status {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff5252;
+            box-shadow: 0 0 6px #ff5252;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .dot-status.activo {
+            background: #4caf50;
+            box-shadow: 0 0 8px #4caf50;
+        }
+        .modal-celular {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        .modal-contenido {
+            background: #23322b;
+            border: 2px solid #d4a574;
+            border-radius: 16px;
+            padding: 26px;
+            max-width: 440px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+        .modal-contenido h3 {
+            font-size: 1.4em;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        .modal-sub {
+            font-size: 0.9em;
+            color: #cfd6cd;
+            margin-bottom: 14px;
+        }
+        .qr-wrapper {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .qr-wrapper img {
+            display: block;
+            border-radius: 4px;
+        }
+        .url-destacada {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px dashed #d4a574;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1em;
+            color: #d4a574;
+            word-break: break-all;
+            margin-bottom: 10px;
+        }
+        .modal-tip {
+            font-size: 0.78em;
+            color: #a4a478;
+        }
+        .btn-cerrar-modal {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            background: transparent;
+            border: none;
+            color: #e8e8e8;
+            font-size: 1.6em;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        @media (max-width: 1000px) {
+            .circuit-grid, .circuit-demo-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-height: 820px) {
+            .slide { padding: 26px 36px; }
+            .slide h2 { font-size: 2.1em; margin-bottom: 16px; }
+            .circuit-svg { max-height: 235px; }
+            .circuit-card p { font-size: 0.75em; }
+            .feature-card p, .feature-card li { font-size: 0.92em; }
+        }
+
+        @media (max-height: 820px) {
+            #slide-demo h2 { font-size: 2em; margin-bottom: 8px; }
+            #slide-demo .circuit-demo-grid { gap: 10px; margin-top: 6px; }
+            #slide-demo .demo-box { padding: 8px 12px; }
+            #slide-demo .demo-box h4 { font-size: 0.9em; margin-bottom: 4px; }
+            #slide-demo .demo-controls { margin-bottom: 4px; gap: 8px; }
+            #slide-demo .demo-controls button { padding: 6px 12px; font-size: 0.8em; }
+            #slide-demo .demo-controls label { font-size: 0.7em; }
+            #demo-canvas { height: 76px; }
+            #slide-demo .circuit-svg { max-height: 160px; }
+            #slide-demo .demo-box .demo-legend { display: none; }
+            #slide-demo .demo-box .demo-readouts { margin-top: 5px; }
+            #slide-demo .demo-box .readout { padding: 4px 8px; }
+            #slide-demo .demo-box .readout .r-label { font-size: 0.52em; }
+            #slide-demo .demo-box .readout .r-value { font-size: 0.8em; }
+            #demo-leds { margin-top: 3px; }
+        }
+
+        /* --- Diapositivas reducidas: densidad y presentadores --- */
+        .presenter-badge {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-size: 0.72em;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #a4a478;
+            background: rgba(164, 164, 120, 0.14);
+            border: 1px solid rgba(164, 164, 120, 0.4);
+            padding: 5px 12px;
+            border-radius: 999px;
+        }
+
+        .data-grid.tres {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 1180px;
+            gap: 14px;
+            margin-top: 14px;
+        }
+        .data-grid.tres .data-box { padding: 14px 16px; }
+        .data-grid.tres .data-box h4 { font-size: 1.05em; margin-bottom: 6px; }
+        .data-grid.tres .data-box p { font-size: 0.85em; line-height: 1.5; }
+
+        .feature-grid.tres {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 1180px;
+            gap: 14px;
+        }
+        .feature-grid.compacto { margin: 14px auto 0; gap: 14px; }
+        .feature-grid.compacto .feature-card { padding: 12px 16px; }
+        .feature-grid.compacto .feature-card h4 { font-size: 1em; margin-bottom: 6px; }
+        .feature-grid.compacto .feature-card p,
+        .feature-grid.compacto .feature-card li { font-size: 0.8em; line-height: 1.45; margin-bottom: 4px; }
+
+        .flow-container.compacto-flow { margin: 12px auto 14px; gap: 8px; }
+        .flow-container.compacto-flow .flow-step { padding: 10px 12px; flex: 1 1 150px; }
+        .flow-container.compacto-flow .flow-step h4 { font-size: 0.92em; margin-bottom: 4px; }
+        .flow-container.compacto-flow .flow-step p { font-size: 0.76em; }
+        .flow-container.compacto-flow .flow-arrow { font-size: 1.3em; }
+
+        /* Diapositiva unificada: circuito + demo */
+        #slide-abp-circuitos h2 { margin-bottom: 16px; }
+        #slide-abp-circuitos .flow-container { margin: 12px auto 6px; }
+        #slide-abp-circuitos .feature-grid { margin: 8px auto; }
+        #slide-abp-circuitos .flow-step { padding: 11px 14px; }
+        #slide-abp-circuitos .feature-card { padding: 14px 18px; }
+        #slide-abp-circuitos .demo-hint { margin-top: 12px; }
+        #slide-demo { padding: 26px 40px; }
+        #slide-demo h2 { font-size: 2.1em; margin-bottom: 8px; }
+        #slide-demo .demo-intro { font-size: 0.92em; line-height: 1.45; margin-bottom: 8px; max-width: 1120px; }
+        #slide-demo .circuit-demo-grid { margin-top: 0; gap: 12px; }
+        #slide-demo .circuit-svg { max-height: 230px; }
+        #slide-demo #demo-canvas { height: 72px; }
+
+        @media (max-width: 900px) {
+            .data-grid.tres, .feature-grid.tres { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 760px) {
+            .data-grid.tres, .feature-grid.tres { grid-template-columns: 1fr; }
+        }
+        @media (max-height: 820px) {
+            #slide-demo { padding: 16px 30px; }
+            #slide-demo h2 { font-size: 1.75em; margin-bottom: 5px; }
+            #slide-demo .demo-intro { font-size: 0.8em; margin-bottom: 5px; }
+            #slide-demo .circuit-svg { max-height: 140px; }
+            #slide-demo #demo-canvas { height: 62px; }
+            .data-grid.tres .data-box p { font-size: 0.78em; }
+
+            #slide-abp-circuitos h2 { font-size: 1.8em; margin-bottom: 8px; }
+            #slide-abp-circuitos p.compacto { font-size: 0.9em; line-height: 1.45; margin-bottom: 8px; }
+            #slide-abp-circuitos .flow-container { margin: 8px auto; gap: 6px; }
+            #slide-abp-circuitos .flow-step { padding: 8px 10px; }
+            #slide-abp-circuitos .flow-step h4 { font-size: 0.85em; margin-bottom: 3px; }
+            #slide-abp-circuitos .flow-step p { font-size: 0.72em; line-height: 1.35; }
+            #slide-abp-circuitos .feature-grid { margin: 8px auto; gap: 10px; }
+            #slide-abp-circuitos .feature-card { padding: 10px 14px; }
+            #slide-abp-circuitos .feature-card h4 { font-size: 0.92em; margin-bottom: 5px; }
+            #slide-abp-circuitos .feature-card li { font-size: 0.76em; line-height: 1.4; margin-bottom: 3px; }
+            #slide-abp-circuitos .demo-hint { font-size: 0.78em; padding: 8px 12px; margin-top: 8px; }
+
+            #slide-dofa h2 { font-size: 1.9em; margin-bottom: 8px; }
+            #slide-dofa .dofa-container { height: auto; gap: 10px; margin-top: 4px; }
+            #slide-dofa .dofa-quadrant { padding: 10px 14px; }
+            #slide-dofa .dofa-quadrant h3 { font-size: 1.1em; margin-bottom: 6px; }
+            #slide-dofa .dofa-quadrant li { font-size: 0.72em; line-height: 1.4; margin-bottom: 3px; }
+        }
+
+        @media (max-height: 700px) {
+            #slide-desarrollo h2 { font-size: 1.7em; margin-bottom: 6px; }
+            #slide-desarrollo p.compacto { font-size: 0.85em; margin-bottom: 6px; }
+            .flow-container.compacto-flow { margin: 6px auto 8px; }
+            .flow-container.compacto-flow .flow-step { padding: 7px 10px; }
+            .feature-grid.tres.compacto .feature-card { padding: 9px 12px; }
+            #slide-desarrollo .demo-hint { font-size: 0.78em; padding: 7px 10px; margin-top: 6px; }
+            #slide-abp-circuitos .demo-hint { display: none; }
+            #slide-abp-circuitos .feature-card li { font-size: 0.72em; }
+
+            #slide-demo { padding: 10px 22px; }
+            #slide-demo h2 { font-size: 1.5em; margin-bottom: 4px; }
+            #slide-demo .demo-intro { font-size: 0.72em; margin-bottom: 4px; }
+            #slide-demo .circuit-svg { max-height: 108px; }
+            #slide-demo #demo-canvas { height: 50px; }
+            #slide-demo .demo-box { padding: 6px 10px; }
+            #slide-demo .demo-box h4 { font-size: 0.8em; margin-bottom: 3px; }
+            #slide-demo .demo-controls { gap: 6px; margin-bottom: 3px; }
+            #slide-demo .demo-controls button { padding: 5px 10px; font-size: 0.72em; }
+            #slide-demo .demo-controls label { font-size: 0.64em; }
+            #slide-demo .demo-box .readout { padding: 3px 7px; }
+            #slide-demo .demo-box .readout .r-label { font-size: 0.48em; }
+            #slide-demo .demo-box .readout .r-value { font-size: 0.72em; }
+        }
+
+        @media (max-height: 700px) and (max-width: 1100px) {
+            #slide-demo { padding: 6px 18px; }
+            #slide-demo #demo-canvas { height: 32px; }
+            #slide-demo .circuit-svg { max-height: 100px; }
+        }
+
+        /* --- NAVEGACIÓN --- */
+        .nav-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(44, 62, 53, 0.8); /* Fondo más oscuro pero con el tono principal */
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1em;
+            color: #b0b0b0;
+            font-weight: 300;
+        }
+        .slide-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(212, 165, 116, 0.3); /* Contador con color principal */
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            color: #d4a574;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container">
+
+        <!-- Diapositiva 1: Título · Sofia -->
+        <div class="slide active" id="slide1">
+            <span class="presenter-badge">Sofia</span>
+            <h1>Mapa Interactivo de Terremotos en Colombia</h1>
+            <h2>Visualización en Tiempo Real e Información Histórica</h2>
+            <p>Mateo Lastra, Sofia López y Juan Manuel Londoño</p>
+        </div>
+
+        <!-- Diapositiva 2: Planteamiento del problema y contexto · Sofia -->
+        <div class="slide" id="slide2">
+            <span class="presenter-badge">Sofia</span>
+            <h2>Planteamiento Del Problema</h2>
+            <p>En Colombia se registran miles de sismos cada año, pero la información no está organizada en una plataforma que sea clara, interactiva y educativa para el público.</p>
+            <p>Los datos existen en el <strong>SGC</strong> o el <strong>USGS</strong>, pero en formatos técnicos y poco accesibles; además, los terremotos históricos que marcaron al país no están integrados en un espacio visual y educativo.</p>
+
+            <div class="data-grid tres">
+                <div class="data-box">
+                    <h4>📈 Actividad Constante</h4>
+                    <p>Por la convergencia de las placas Nazca, Suramericana y Caribe, el SGC registra un promedio de <strong>2,500 sismos al año</strong>; la amenaza de eventos mayores es permanente.</p>
+                </div>
+                <div class="data-box">
+                    <h4>⚡ Terremoto de Armenia (1999)</h4>
+                    <p>Magnitud <strong>6.2 Mw</strong>, más de <strong>1,000 muertos</strong> y destrucción del 60% del casco urbano del Eje Cafetero.</p>
+                </div>
+                <div class="data-box">
+                    <h4>🏚️ Terremoto de Popayán (1983)</h4>
+                    <p>Magnitud <strong>5.5 Mw</strong>; destruyó gran parte del centro histórico de Popayán, un patrimonio cultural invaluable.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 3: Conversión a reto y justificación · Mateo -->
+        <div class="slide" id="slide-reto">
+            <span class="presenter-badge">Mateo</span>
+            <h2>Conversión del Problema a Reto</h2>
+            <h3>¿Cómo plantearían el problema como un reto?</h3>
+            <p>El reto es <strong>diseñar una página web interactiva</strong> que muestre en un mapa de Colombia los sismos en tiempo real, permita consultar los terremotos históricos más importantes y dé la opción de simular un sismo indicando magnitud y epicentro para ver qué zonas serían afectadas.</p>
+            <p>Buscamos que la información sea más clara, educativa e interactiva para cualquier persona y no solo para los expertos.</p>
+
+            <div class="demo-hint">
+                💡 <strong>Justificación:</strong> el proyecto no solo tiene valor académico; aporta un
+                <strong>valor social</strong> al fomentar la conciencia y la prevención frente al riesgo sísmico en Colombia.
+            </div>
+        </div>
+
+        <!-- Diapositiva 4: Objetivo general · Mateo -->
+        <div class="slide" id="slide-objetivo">
+            <span class="presenter-badge">Mateo</span>
+            <h2>Objetivo General</h2>
+            <p style="font-size: 1.8em; max-width: 1000px;">
+                <strong>Diseñar una página web interactiva que permita visualizar en un mapa de Colombia los sismos en tiempo real, consultar información histórica de terremotos importantes y simular escenarios de impacto a partir de un epicentro y magnitud ingresada por el usuario.</strong>
+            </p>
+        </div>
+
+        <!-- Diapositiva 5: Objetivos específicos y alcance · Mateo -->
+        <div class="slide" id="slide-especificos">
+            <span class="presenter-badge">Mateo</span>
+            <h2>Objetivos Específicos y Alcance</h2>
+            <ul>
+                <li>Integrar datos en tiempo real mediante una API de sismos.</li>
+                <li>Construir una base de datos con terremotos históricos de Colombia.</li>
+                <li>Desarrollar un mapa interactivo con epicentros, magnitudes y fechas.</li>
+                <li>Permitir la simulación de sismos ficticios para observar su posible alcance.</li>
+                <li>Proporcionar información educativa sobre el riesgo sísmico y sus consecuencias.</li>
+            </ul>
+
+            <div class="feature-grid compacto dos">
+                <div class="feature-card">
+                    <h4>✅ El proyecto incluye</h4>
+                    <ul>
+                        <li>Mapa interactivo con epicentros.</li>
+                        <li>Simulación básica de impacto según magnitud.</li>
+                        <li>Fichas de los principales terremotos históricos.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>⛔ No contempla</h4>
+                    <ul>
+                        <li>Predicciones sísmicas avanzadas.</li>
+                        <li>Integración con sistemas oficiales de alerta temprana.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 6: Desarrollo de la plataforma (10 + 12 + 13) · Mateo -->
+        <div class="slide" id="slide-desarrollo">
+            <span class="presenter-badge">Mateo</span>
+            <h2>Desarrollo: Registro, Mapa y Simulador <span class="tag-archivo">Sismos.html · Mapa.html</span></h2>
+            <p class="compacto">La plataforma NATU integra un registro seguro, un mapa interactivo y un simulador de sismos. En la exposición recorremos el flujo completo:</p>
+
+            <div class="flow-container compacto-flow">
+                <div class="flow-step">
+                    <h4>1. Pantalla de inicio</h4>
+                    <p>Punto de entrada de la plataforma NATU.</p>
+                    <span class="flow-file">Sismos.html</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <h4>2. Registro</h4>
+                    <p>Nombre, correo y contraseña del usuario.</p>
+                    <span class="flow-file">Registro.html</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <h4>3. Términos y condiciones</h4>
+                    <p>Validación obligatoria para completar el registro.</p>
+                    <span class="flow-file">Seguridad.html</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <h4>4. Iniciar sesión</h4>
+                    <p>Acceso con el correo y la contraseña registrados.</p>
+                    <span class="flow-file">Iniciar-Sesion.html</span>
+                </div>
+            </div>
+
+            <div class="feature-grid tres compacto">
+                <div class="feature-card">
+                    <h4>🔐 Seguridad de la cuenta</h4>
+                    <ul>
+                        <li>Recuperación de contraseña con <strong>códigos de verificación</strong> (EmailJS).</li>
+                        <li><strong>Aviso al correo</strong> en cada inicio de sesión.</li>
+                        <li>Credenciales <strong>locales y ligeras</strong> (localStorage).</li>
+                        <li>Validación de términos y confirmación de contraseña.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🗺️ Mapa interactivo <span class="tag-archivo">Leaflet.js</span></h4>
+                    <ul>
+                        <li><strong>Coordenadas en tiempo real</strong> de latitud y longitud al mover el cursor.</li>
+                        <li><strong>Zoom y desplazamiento</strong> para explorar el país.</li>
+                        <li><strong>Clic para fijar el epicentro</strong> de una simulación.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🌋 Simulador de sismos</h4>
+                    <ul>
+                        <li>Sliders de <strong>magnitud</strong> (2.0–8.5), <strong>profundidad</strong> (superficial–700 km) y <strong>duración</strong>.</li>
+                        <li>Dibuja un <strong>radio de impacto realista</strong> en la superficie.</li>
+                        <li>A mayor profundidad, <strong>menor sacudida</strong> superficial.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="demo-hint">
+                📰 <strong>Secciones complementarias:</strong> <strong>Noticias</strong> se conecta a fuentes como el USGS y medios colombianos; <strong>Información</strong> es una guía educativa sobre magnitud, intensidad y qué hacer antes, durante y después de un temblor.
+            </div>
+        </div>
+
+        <!-- Diapositiva 7: ABP y su relación con Circuitos Digitales · Sofia -->
+        <div class="slide" id="slide-abp-circuitos">
+            <span class="presenter-badge">Sofia</span>
+            <h2>ABP y Circuitos: la Alarma Sísmica del Proyecto</h2>
+
+            <p class="compacto">
+                El <strong>Aprendizaje Basado en Proyectos (ABP)</strong> parte de un problema
+                real y exige integrar varias áreas para resolverlo. Nuestro proyecto une
+                <strong>sismología, programación y circuitos</strong> en dos piezas que comparten
+                la misma lógica: la <strong>plataforma web</strong> y un
+                <strong>módulo físico de alarma sísmica</strong>.
+            </p>
+
+            <div class="flow-container">
+                <div class="flow-step">
+                    <h4>1. Problema real</h4>
+                    <p>Colombia tiene alta actividad sísmica y la información es muy técnica.</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <h4>2. Investigar</h4>
+                    <p>Datos del SGC / USGS y principios de sismología.</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <h4>3. Diseñar</h4>
+                    <p>Sensor → transistor → alarma (LED y buzzer) en un mismo circuito.</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <h4>4. Construir</h4>
+                    <p>Mapa, simulador y módulo de alarma sísmica.</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <h4>5. Probar y exponer</h4>
+                    <p>Demostración en vivo de la alarma del proyecto.</p>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🚨 La alarma sísmica del proyecto</h4>
+                    <ul>
+                        <li><strong>Sensor:</strong> detecta la vibración del suelo y entrega una señal eléctrica.</li>
+                        <li><strong>Circuito cerrado:</strong> el sensor cierra el lazo y permite el paso de corriente.</li>
+                        <li><strong>Serie y paralelo:</strong> formas de conectar el LED, el buzzer y los avisos.</li>
+                        <li><strong>Transistor (B, C, E):</strong> convierte la señal del sensor en un interruptor 1/0.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🧩 Cómo lo aborda el ABP</h4>
+                    <ul>
+                        <li>No se memoriza el circuito: <strong>se construye y se prueba</strong>.</li>
+                        <li>La teoría de circuitos se convierte en un producto visible.</li>
+                        <li>Se integran matemáticas, física, programación y diseño.</li>
+                        <li>El error se corrige iterando, como en un proyecto real.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="demo-hint">
+                🔗 <strong>La conexión:</strong> el módulo físico y el simulador web usan la misma
+                lógica: el <strong>sensor</strong> entrega la señal, el <strong>transistor</strong>
+                la convierte en un <strong>1/0</strong> y la <strong>alarma</strong> se activa. En
+                la siguiente diapositiva verás el circuito y la demo interactiva.
+            </div>
+        </div>
+
+        <!-- Diapositiva 8: Circuito de alarma + demo interactiva (16 + 17) · Sofia -->
+        <div class="slide" id="slide-demo">
+            <span class="presenter-badge">Sofia</span>
+            <h2>Circuito de Alarma Sísmica y Demo Interactiva</h2>
+
+            <p class="compacto demo-intro">
+                La plataforma web se complementa con un <strong>módulo físico de alarma
+                sísmica</strong>. No son circuitos aislados: el <strong>sensor</strong> detecta la
+                vibración, el <strong>transistor</strong> la convierte en un <strong>1/0</strong> y
+                la <strong>alarma</strong> se activa. Prueba la demo en vivo.
+            </p>
+
+            <div class="circuit-demo-grid">
+                <div class="demo-box sismografo-box">
+                    <h4>📈 Sismógrafo del proyecto: la señal que dispara la alarma</h4>
+
+                    <div class="demo-controls sismo-controls">
+                        <button type="button" id="btn-sismo">🌋 Simular sismo</button>
+                        <button type="button" id="btn-reset" class="secundario">🔄 Reiniciar</button>
+                        <button type="button" id="btn-conectar-celular" class="secundario btn-celular" title="Conectar acelerómetro de celular por Wi-Fi">📱 Celular <span id="dot-celular" class="dot-status"></span></button>
+                        <label>Intensidad
+                            <input type="range" id="rango-sismo" min="0" max="100" step="1" value="80">
+                            <span id="val-sismo">80 %</span>
+                        </label>
+                        <label>Umbral
+                            <input type="range" id="demo-umbral" min="0.5" max="4.5" step="0.1" value="2.5">
+                            <span id="demo-umbral-valor">2.5 V</span>
+                        </label>
+                        <label>ADC
+                            <select id="demo-bits">
+                                <option value="8" selected>8 bits</option>
+                                <option value="4">4 bits</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <canvas id="demo-canvas" aria-label="Sismograma de la señal sísmica">Tu navegador no soporta canvas.</canvas>
+                    <div id="demo-leds" aria-label="Bits de salida del ADC"></div>
+
+                    <div class="demo-readouts sismo-readouts">
+                        <div class="readout">
+                            <span class="r-label">Pico</span>
+                            <span class="r-value" id="demo-analog">0.00 V</span>
+                        </div>
+                        <div class="readout">
+                            <span class="r-label">ADC</span>
+                            <span class="r-value" id="demo-digital">10000000</span>
+                        </div>
+                        <div class="readout">
+                            <span class="r-label">Comparador</span>
+                            <span class="r-value" id="demo-comparador">0</span>
+                        </div>
+                        <div class="readout" id="readout-latch">
+                            <span class="r-label">Alarma</span>
+                            <span class="r-value" id="demo-latch-estado">DESACTIVADA</span>
+                        </div>
+                        <div class="readout">
+                            <span class="r-label">Muestras &gt; umbral</span>
+                            <span class="r-value" id="demo-contador">0</span>
+                        </div>
+                    </div>
+
+                    <p class="demo-legend">
+                        El <strong>comparador</strong> responde al instante; la
+                        <strong>alarma</strong> se activa en tiempo real al superar el umbral y se apaga de inmediato al descender.
+                    </p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>🚨 Lazo de alarma: sensor → LED + buzzer</h4>
+                    <div class="demo-controls">
+                        <button type="button" id="btn-serie" class="activo">Serie</button>
+                        <button type="button" id="btn-paralelo" class="inactivo">Paralelo</button>
+                    </div>
+
+                    <svg id="svg-circuito" class="circuit-svg" viewBox="0 0 520 240" aria-label="Circuito de alarma sísmica"></svg>
+
+                    <div class="demo-readouts">
+                        <div class="readout">
+                            <span class="r-label">Sensor</span>
+                            <span class="r-value" id="out-sensor">0 · REPOSO</span>
+                        </div>
+                        <div class="readout">
+                            <span class="r-label">Corriente</span>
+                            <span class="r-value" id="out-corriente">0 mA</span>
+                        </div>
+                        <div class="readout" id="readout-alarma">
+                            <span class="r-label">Alarma</span>
+                            <span class="r-value" id="out-alarma">APAGADA</span>
+                        </div>
+                    </div>
+
+                    <p class="demo-legend" id="nota-circuito">
+                        El sismógrafo cierra el lazo al superar el umbral. En <strong>serie</strong>,
+                        sensor y avisos comparten el mismo camino.
+                    </p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>🔀 Transistor: la señal del sismógrafo se vuelve 1/0</h4>
+
+                    <svg class="circuit-svg" viewBox="0 0 320 230" aria-label="Transistor como interruptor de la alarma">
+                        <path d="M45 30 H198 M45 30 V85 M45 115 V200 H198" fill="none" stroke="#a4a478" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M198 30 V46 M198 68 V85" fill="none" stroke="#a4a478" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="33" y1="91" x2="57" y2="91" stroke="#d4a574" stroke-width="3"/>
+                        <line x1="38" y1="102" x2="52" y2="102" stroke="#d4a574" stroke-width="3"/>
+                        <text x="62" y="96" fill="#d4a574" font-size="11" font-family="Montserrat, sans-serif">+</text>
+                        <circle id="led-exterior" cx="198" cy="57" r="20" fill="#ff6b6b" opacity="0"/>
+                        <circle id="led-interior" cx="198" cy="57" r="11" fill="#3a443c" stroke="#d4a574" stroke-width="2"/>
+                        <text x="222" y="61" fill="#d4a574" font-size="9" font-weight="700" font-family="Montserrat, sans-serif">ALARMA</text>
+                        <circle cx="175" cy="140" r="38" fill="none" stroke="#a4a478" stroke-width="2"/>
+                        <line x1="158" y1="120" x2="158" y2="160" stroke="#d4a574" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="95" y1="140" x2="158" y2="140" stroke="#a4a478" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M158 131 L198 108 V85" fill="none" stroke="#a4a478" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M158 149 L198 172 V200" fill="none" stroke="#a4a478" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M191 165 L199 171 L190 175 Z" fill="#d4a574"/>
+                        <rect x="55" y="131" width="40" height="18" rx="3" fill="rgba(212,165,116,0.15)" stroke="#d4a574" stroke-width="1.8"/>
+                        <text x="75" y="143" text-anchor="middle" fill="#d4a574" font-size="6.5" font-weight="700" font-family="Montserrat, sans-serif">SENSOR</text>
+                        <text x="112" y="132" fill="#d4a574" font-size="12" font-weight="700" font-family="Montserrat, sans-serif">B</text>
+                        <text x="207" y="102" fill="#d4a574" font-size="12" font-weight="700" font-family="Montserrat, sans-serif">C</text>
+                        <text x="207" y="193" fill="#d4a574" font-size="12" font-weight="700" font-family="Montserrat, sans-serif">E</text>
+                    </svg>
+
+                    <div class="demo-readouts">
+                        <div class="readout">
+                            <span class="r-label">Señal del sensor</span>
+                            <span class="r-value" id="out-senal">+0.00 V</span>
+                        </div>
+                        <div class="readout" id="readout-transistor">
+                            <span class="r-label">Salida digital</span>
+                            <span class="r-value" id="out-transistor">0 · CORTE</span>
+                        </div>
+                        <div class="readout" id="readout-alarma2">
+                            <span class="r-label">Alarma</span>
+                            <span class="r-value" id="out-alarma2">APAGADA</span>
+                        </div>
+                        <div class="readout">
+                            <span class="r-label">Corriente de colector</span>
+                            <span class="r-value" id="out-colector">0.0 mA</span>
+                        </div>
+                    </div>
+
+                    <p class="demo-legend">
+                        Si la señal supera el umbral, el transistor conduce (<strong>1</strong>) y
+                        enciende la alarma; por debajo queda en <strong>corte (0)</strong> y apaga la alarma instantáneamente.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Modal Código QR y enlace para el celular -->
+            <div id="modal-qr-celular" class="modal-celular" style="display:none;">
+                <div class="modal-contenido">
+                    <button type="button" class="btn-cerrar-modal" id="btn-cerrar-modal" title="Cerrar">&times;</button>
+                    <h3>📱 Conectar Celular al Sismógrafo</h3>
+                    <p class="modal-sub">Escanea con la cámara de tu celular en la misma red Wi-Fi:</p>
+                    <div class="qr-wrapper">
+                        <img id="img-qr-celular" src="" alt="Código QR Sensor Celular" width="180" height="180">
+                    </div>
+                    <div class="url-destacada" id="url-texto-celular">http://localhost:3000/sensor/control.html</div>
+                    <p class="modal-tip">💡 Al sacudir o mover el celular, el sismograma responderá en vivo y activará la alarma cuando supere el umbral.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 9: Matriz DOFA · Juan Manuel -->
+        <div class="slide" id="slide-dofa">
+            <span class="presenter-badge">Juan Manuel</span>
+            <h2>Análisis DOFA</h2>
+            <div class="dofa-container">
+                <div class="dofa-quadrant positive">
+                    <h3>Fortalezas</h3>
+                    <ul>
+                        <li>Proyecto innovador y atractivo.</li>
+                        <li>Utilidad real en Colombia.</li>
+                        <li>Escalabilidad a otros países.</li>
+                        <li>Interactividad desde la Fase 1.</li>
+                    </ul>
+                </div>
+                <div class="dofa-quadrant negative">
+                    <h3>Debilidades</h3>
+                    <ul>
+                        <li>Alto nivel de complejidad técnica.</li>
+                        <li>Riesgo en el tiempo de desarrollo.</li>
+                        <li>Curva de aprendizaje para nuevas librerías.</li>
+                    </ul>
+                </div>
+                <div class="dofa-quadrant positive">
+                    <h3>Oportunidades</h3>
+                    <ul>
+                        <li>Relevancia social (Armenia '99, Popayán '83).</li>
+                        <li>Apoyo institucional (datos abiertos SGC/USGS).</li>
+                        <li>Visibilidad académica y futura expansión.</li>
+                    </ul>
+                </div>
+                <div class="dofa-quadrant negative">
+                    <h3>Amenazas</h3>
+                    <ul>
+                        <li>Disponibilidad y calidad de los datos.</li>
+                        <li>Competencia de proyectos existentes.</li>
+                        <li>Sobrecarga académica del semestre.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 10: Conclusión · Juan Manuel -->
+        <div class="slide" id="slide-conclusion">
+            <span class="presenter-badge">Juan Manuel</span>
+            <h2>Conclusión</h2>
+            <p>El proyecto propone una herramienta innovadora que combina programación, geolocalización y datos históricos para crear conciencia sobre los riesgos sísmicos en Colombia.</p>
+            <p>Aunque en la primera fase será un prototipo básico, sienta las bases para una plataforma más avanzada que pueda ser útil tanto en educación como en gestión del riesgo.</p>
+        </div>
+
+    </div>
+
+    <!-- Navegación -->
+    <div class="nav-hint">Usa las flechas del teclado ← → para navegar</div>
+    <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">10</span></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const currentSlideSpan = document.getElementById('current-slide');
+            const totalSlidesSpan = document.getElementById('total-slides');
+            let currentSlideIndex = 0;
+
+            totalSlidesSpan.textContent = slides.length;
+
+            function showSlide(index) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                
+                if (index >= slides.length) {
+                    currentSlideIndex = 0;
+                } else if (index < 0) {
+                    currentSlideIndex = slides.length - 1;
+                } else {
+                    currentSlideIndex = index;
+                }
+
+                slides[currentSlideIndex].classList.add('active');
+                currentSlideSpan.textContent = currentSlideIndex + 1;
+            }
+
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'ArrowRight') {
+                    showSlide(currentSlideIndex + 1);
+                } else if (event.key === 'ArrowLeft') {
+                    showSlide(currentSlideIndex - 1);
+                }
+            });
+
+            showSlide(currentSlideIndex);
+        });
+    </script>
+
+    <!-- ============================================================
+         DEMO INTERACTIVA: SISMÓGRAFO Y ALARMA SÍSMICA DEL PROYECTO
+         La señal del sismógrafo dispara el lazo y el transistor
+         ============================================================ -->
+    <script>
+        (function () {
+            'use strict';
+
+            var slide = document.getElementById('slide-demo');
+            var svg = document.getElementById('svg-circuito');
+            var canvas = document.getElementById('demo-canvas');
+            if (!slide || !svg || !canvas) return;
+
+            // ---------- Elementos ----------
+            var btnSerie = document.getElementById('btn-serie');
+            var btnParalelo = document.getElementById('btn-paralelo');
+            var btnSismo = document.getElementById('btn-sismo');
+            var btnReset = document.getElementById('btn-reset');
+            var btnConectarCelular = document.getElementById('btn-conectar-celular');
+            var dotCelular = document.getElementById('dot-celular');
+            var modalQr = document.getElementById('modal-qr-celular');
+            var btnCerrarModal = document.getElementById('btn-cerrar-modal');
+            var imgQr = document.getElementById('img-qr-celular');
+            var urlTextoCelular = document.getElementById('url-texto-celular');
+            var rangoSismo = document.getElementById('rango-sismo');
+            var valSismo = document.getElementById('val-sismo');
+            var demoUmbral = document.getElementById('demo-umbral');
+            var demoUmbralValor = document.getElementById('demo-umbral-valor');
+            var demoBits = document.getElementById('demo-bits');
+
+            var outSensor = document.getElementById('out-sensor');
+            var outCorriente = document.getElementById('out-corriente');
+            var outAlarma = document.getElementById('out-alarma');
+            var readoutAlarma = document.getElementById('readout-alarma');
+            var notaCircuito = document.getElementById('nota-circuito');
+
+            var outSenal = document.getElementById('out-senal');
+            var outTransistor = document.getElementById('out-transistor');
+            var outAlarma2 = document.getElementById('out-alarma2');
+            var readoutTransistor = document.getElementById('readout-transistor');
+            var readoutAlarma2 = document.getElementById('readout-alarma2');
+            var outColector = document.getElementById('out-colector');
+            var ledExterior = document.getElementById('led-exterior');
+            var ledInterior = document.getElementById('led-interior');
+
+            var demoAnalog = document.getElementById('demo-analog');
+            var demoDigital = document.getElementById('demo-digital');
+            var demoComparador = document.getElementById('demo-comparador');
+            var demoLatch = document.getElementById('demo-latch-estado');
+            var readoutLatch = document.getElementById('readout-latch');
+            var demoContador = document.getElementById('demo-contador');
+            var demoLeds = document.getElementById('demo-leds');
+
+            // ---------- Estado compartido ----------
+            var modo = 'serie';
+            var alarma = false;          // activada en tiempo real según umbral
+            var umbral = parseFloat(demoUmbral.value) || 2.5;
+            var bits = parseInt(demoBits.value, 10) || 8;
+            var intensidad = parseFloat(rangoSismo.value) || 80;
+            var amplitud = 0.5 + (intensidad / 100) * 4.2;
+            var sismoInicio = -1;
+            var senalActual = 0;
+            var pico = 0;
+            var picoSismo = 0;
+            var disparos = 0;
+            var muestras = [];
+            var ultimoDom = 0;
+            var tReloj = 0;
+
+            // Conexión móvil en tiempo real
+            var wsCelular = null;
+            var voltajeCelular = 0;
+            var ultimaLecturaCelular = 0;
+            var urlControlMovil = '';
+
+            var R_LED = 330;
+            var R_BUZZER = 120;
+            var VOLTAJE = 9;
+            var VENTANA = 6;             // segundos visibles en el sismógrafo
+
+            // ---------- Señal del sismógrafo ----------
+            function valorSenal(t) {
+                var ruido = 0.07 * Math.sin(2 * Math.PI * 0.7 * t)
+                          + 0.05 * Math.sin(2 * Math.PI * 1.9 * t + 1.1)
+                          + 0.03 * Math.sin(2 * Math.PI * 3.1 * t + 0.4);
+                var valor = ruido;
+
+                // Señal del acelerómetro del celular en tiempo real
+                var dtCelular = performance.now() - ultimaLecturaCelular;
+                if (dtCelular < 400 && voltajeCelular > 0.05) {
+                    valor += voltajeCelular * (0.85 * Math.sin(2 * Math.PI * 3.6 * t) + 0.25 * Math.sin(2 * Math.PI * 7.2 * t + 0.5));
+                }
+
+                if (sismoInicio >= 0) {
+                    var d = t - sismoInicio;
+                    if (d >= 0 && d <= 4) {
+                        valor += amplitud * Math.exp(-d / 1.1) * Math.sin(2 * Math.PI * 1.6 * d);
+                    }
+                }
+                return valor;
+            }
+
+            function calcularPicoPaquete() {
+                var maximo = 0;
+                for (var d = 0; d <= 4; d += 0.005) {
+                    var v = Math.abs(amplitud * Math.exp(-d / 1.1) * Math.sin(2 * Math.PI * 1.6 * d));
+                    if (v > maximo) maximo = v;
+                }
+                return maximo;
+            }
+
+            function nivelEntero(v) {
+                var niveles = Math.pow(2, bits);
+                var paso = 10 / niveles;
+                var n = Math.floor((v + 5) / paso + 0.5);
+                return Math.min(niveles - 1, Math.max(0, n));
+            }
+
+            function binario(v) {
+                var s = nivelEntero(v).toString(2);
+                while (s.length < bits) s = '0' + s;
+                return s;
+            }
+
+            // ---------- Dibujo del lazo ----------
+            function cable(d) {
+                return '<path d="' + d + '" fill="none" stroke="#a4a478" stroke-width="3" stroke-linecap="round"/>';
+            }
+
+            function bateria(x, yArriba) {
+                return '<line x1="' + (x - 9) + '" y1="' + yArriba + '" x2="' + (x + 9) + '" y2="' + yArriba + '" stroke="#d4a574" stroke-width="3"/>' +
+                       '<line x1="' + (x - 5) + '" y1="' + (yArriba + 12) + '" x2="' + (x + 5) + '" y2="' + (yArriba + 12) + '" stroke="#d4a574" stroke-width="3"/>' +
+                       '<text x="' + (x + 14) + '" y="' + (yArriba + 5) + '" fill="#d4a574" font-size="12" font-family="Montserrat, sans-serif">+</text>';
+            }
+
+            function aviso(x, y, etiqueta, activo, ancho, alto) {
+                var fill = activo ? 'rgba(255,107,107,0.28)' : 'rgba(164,164,120,0.12)';
+                var stroke = activo ? '#ff8f8f' : '#a4a478';
+                var color = activo ? '#ff8f8f' : '#cfd6cd';
+                return '<rect x="' + (x - ancho / 2) + '" y="' + (y - alto / 2) + '" width="' + ancho + '" height="' + alto + '" rx="6" fill="' + fill + '" stroke="' + stroke + '" stroke-width="2"/>' +
+                       '<text x="' + x + '" y="' + (y + 4) + '" text-anchor="middle" fill="' + color + '" font-size="10" font-weight="700" font-family="Montserrat, sans-serif">' + etiqueta + '</text>';
+            }
+
+            function interruptorSensor() {
+                var color = alarma ? '#ff8f8f' : '#d4a574';
+                return '<circle cx="140" cy="50" r="3" fill="#d4a574"/>' +
+                       '<circle cx="180" cy="50" r="3" fill="#d4a574"/>' +
+                       '<line x1="140" y1="50" x2="' + (alarma ? 180 : 172) + '" y2="' + (alarma ? 50 : 32) + '" stroke="' + color + '" stroke-width="3" stroke-linecap="round"/>' +
+                       '<text x="160" y="24" text-anchor="middle" fill="' + color + '" font-size="12" font-weight="700" font-family="Montserrat, sans-serif">SENSOR</text>';
+            }
+
+            function dibujarLazo() {
+                var activo = alarma;
+                var html = '';
+                var resistencia;
+
+                if (modo === 'serie') {
+                    resistencia = R_LED + R_BUZZER;
+                } else {
+                    resistencia = (R_LED * R_BUZZER) / (R_LED + R_BUZZER);
+                }
+
+                if (modo === 'serie') {
+                    html += cable('M60 50 H140');
+                    html += cable('M180 50 H252');
+                    html += cable('M308 50 H332');
+                    html += cable('M388 50 H460');
+                    html += cable('M460 50 V190');
+                    html += cable('M60 190 H460');
+                    html += cable('M60 50 V110');
+                    html += cable('M60 150 V190');
+                    html += bateria(60, 124);
+                    html += interruptorSensor();
+                    html += aviso(280, 50, 'LED', activo, 56, 22);
+                    html += aviso(360, 50, 'BUZZER', activo, 56, 22);
+                } else {
+                    html += cable('M60 50 H140');
+                    html += cable('M180 50 H460');
+                    html += cable('M460 50 V190');
+                    html += cable('M60 190 H460');
+                    html += cable('M60 50 V110');
+                    html += cable('M60 150 V190');
+                    html += bateria(60, 124);
+                    html += interruptorSensor();
+                    html += cable('M320 50 V105');
+                    html += cable('M320 127 V190');
+                    html += cable('M400 50 V105');
+                    html += cable('M400 127 V190');
+                    html += aviso(320, 116, 'LED', activo, 56, 22);
+                    html += aviso(400, 116, 'BUZZER', activo, 56, 22);
+                }
+
+                svg.innerHTML = html;
+
+                var corriente = activo ? VOLTAJE / resistencia : 0;
+                outSensor.textContent = activo ? '1 · SISMO' : '0 · REPOSO';
+                outCorriente.textContent = (corriente * 1000).toFixed(0) + ' mA';
+                outAlarma.textContent = activo ? 'ACTIVADA' : 'APAGADA';
+                readoutAlarma.classList.toggle('alarm', activo);
+
+                if (notaCircuito) {
+                    notaCircuito.innerHTML = modo === 'serie'
+                        ? 'El sismógrafo cierra el lazo al superar el umbral. En <strong>serie</strong>, sensor y avisos comparten el mismo camino.'
+                        : 'En <strong>paralelo</strong>, cada aviso tiene su propia rama: todos reciben el mismo voltaje y se activan juntos.';
+                }
+            }
+
+            // ---------- Panel del transistor ----------
+            function actualizarTransistor(conduce) {
+                outSenal.textContent = (senalActual >= 0 ? '+' : '') + senalActual.toFixed(2) + ' V';
+                outTransistor.textContent = conduce ? '1 · SATURACIÓN' : '0 · CORTE';
+                outColector.textContent = conduce ? '20.0 mA' : '0.0 mA';
+                readoutTransistor.classList.toggle('alarm', conduce);
+                outAlarma2.textContent = conduce ? 'ACTIVADA' : 'APAGADA';
+                readoutAlarma2.classList.toggle('alarm', conduce);
+
+                ledInterior.setAttribute('fill', conduce ? '#ff6b6b' : '#3a443c');
+                ledExterior.setAttribute('opacity', conduce ? '1' : '0');
+            }
+
+            // ---------- Alarma y reinicio ----------
+            function fijarAlarma(estado) {
+                var nuevo = (typeof estado === 'boolean') ? estado : true;
+                if (alarma === nuevo) return;
+                alarma = nuevo;
+                dibujarLazo();
+                demoLatch.textContent = alarma ? 'ACTIVADA' : 'DESACTIVADA';
+                readoutLatch.classList.toggle('alarm', alarma);
+            }
+
+            function reiniciar() {
+                alarma = false;
+                sismoInicio = -1;
+                senalActual = 0;
+                pico = 0;
+                picoSismo = 0;
+                disparos = 0;
+                muestras = [];
+                ultimoDom = 0;
+
+                dibujarLazo();
+                actualizarTransistor(false);
+
+                demoAnalog.textContent = '0.00 V';
+                demoDigital.textContent = binario(0);
+                demoComparador.textContent = '0';
+                demoContador.textContent = '0';
+                demoLatch.textContent = 'DESACTIVADA';
+                readoutLatch.classList.remove('alarm');
+                actualizarLeds(0);
+            }
+
+            // ---------- LEDs del ADC ----------
+            function construirLeds() {
+                demoLeds.innerHTML = '';
+                for (var i = 0; i < bits; i++) {
+                    demoLeds.appendChild(document.createElement('span'));
+                }
+            }
+
+            function actualizarLeds(v) {
+                var valor = binario(v);
+                var leds = demoLeds.children;
+                for (var i = 0; i < leds.length; i++) {
+                    leds[i].classList.toggle('on', valor.charAt(i) === '1');
+                }
+            }
+
+            // ---------- Sismógrafo en canvas ----------
+            function ajustarCanvas() {
+                var w = canvas.clientWidth;
+                var h = canvas.clientHeight;
+                if (!w || !h) return false;
+                var ratio = window.devicePixelRatio || 1;
+                if (canvas.width !== Math.round(w * ratio) || canvas.height !== Math.round(h * ratio)) {
+                    canvas.width = Math.round(w * ratio);
+                    canvas.height = Math.round(h * ratio);
+                }
+                var ctx = canvas.getContext('2d');
+                ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+                return true;
+            }
+
+            function dibujarSismografo(t) {
+                if (!ajustarCanvas()) return;
+                var ctx = canvas.getContext('2d');
+                var w = canvas.clientWidth;
+                var h = canvas.clientHeight;
+
+                ctx.clearRect(0, 0, w, h);
+
+                // Rejilla
+                ctx.strokeStyle = 'rgba(164,164,120,0.16)';
+                ctx.lineWidth = 1;
+                var pasoX = Math.max(50, w / 12);
+                for (var x = 0; x <= w; x += pasoX) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, h);
+                    ctx.stroke();
+                }
+                for (var y = 0; y <= h; y += h / 6) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(w, y);
+                    ctx.stroke();
+                }
+
+                var y0 = h / 2;
+                var escala = (h / 2 - 10) / 5;
+
+                // Línea cero
+                ctx.strokeStyle = 'rgba(164,164,120,0.55)';
+                ctx.beginPath();
+                ctx.moveTo(0, y0);
+                ctx.lineTo(w, y0);
+                ctx.stroke();
+
+                // Umbral
+                ctx.save();
+                ctx.setLineDash([5, 4]);
+                ctx.strokeStyle = 'rgba(255,143,143,0.6)';
+                ctx.beginPath();
+                ctx.moveTo(0, y0 - umbral * escala);
+                ctx.lineTo(w, y0 - umbral * escala);
+                ctx.moveTo(0, y0 + umbral * escala);
+                ctx.lineTo(w, y0 + umbral * escala);
+                ctx.stroke();
+                ctx.restore();
+
+                // Etiquetas
+                ctx.font = '9px Montserrat, sans-serif';
+                ctx.fillStyle = '#a4a478';
+                ctx.fillText('+5 V', 6, 12);
+                ctx.fillText('0 V', 6, y0 - 4);
+                ctx.fillText('-5 V', 6, h - 5);
+                ctx.fillStyle = 'rgba(255,143,143,0.85)';
+                ctx.fillText('umbral ' + umbral.toFixed(1) + ' V', w - 84, y0 - umbral * escala - 4);
+
+                // Traza
+                var t0 = t - VENTANA;
+                ctx.beginPath();
+                var primero = true;
+                for (var i = 0; i < muestras.length; i++) {
+                    var m = muestras[i];
+                    if (m.t < t0) continue;
+                    var px = ((m.t - t0) / VENTANA) * w;
+                    var py = y0 - m.v * escala;
+                    if (primero) {
+                        ctx.moveTo(px, py);
+                        primero = false;
+                    } else {
+                        ctx.lineTo(px, py);
+                    }
+                }
+                ctx.strokeStyle = alarma ? '#ff8f8f' : '#d4a574';
+                ctx.lineWidth = 1.8;
+                ctx.shadowColor = alarma ? 'rgba(255,107,107,0.75)' : 'rgba(212,165,116,0.5)';
+                ctx.shadowBlur = alarma ? 7 : 3;
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+
+                // Punto actual
+                if (muestras.length) {
+                    var ult = muestras[muestras.length - 1];
+                    var lx = ((ult.t - t0) / VENTANA) * w;
+                    var ly = y0 - ult.v * escala;
+                    ctx.beginPath();
+                    ctx.arc(lx, ly, 2.6, 0, Math.PI * 2);
+                    ctx.fillStyle = alarma ? '#ff8f8f' : '#d4a574';
+                    ctx.fill();
+                }
+
+                // Estado del sismo
+                if (sismoInicio >= 0) {
+                    ctx.fillStyle = '#ff8f8f';
+                    ctx.font = 'bold 10px Montserrat, sans-serif';
+                    ctx.fillText('SISMO EN CURSO', w / 2 - 42, 14);
+                }
+            }
+
+            // ---------- Bucle de simulación ----------
+            function bucle(ms) {
+                window.requestAnimationFrame(bucle);
+                tReloj = ms / 1000;
+                if (!slide.classList.contains('active')) return;
+
+                var t = tReloj;
+                var v = valorSenal(t);
+                senalActual = v;
+
+                if (sismoInicio >= 0 && t - sismoInicio > 4.5) {
+                    sismoInicio = -1;
+                }
+
+                var conduce = Math.abs(v) >= umbral;
+
+                if (conduce) {
+                    disparos++;
+                    fijarAlarma(true);
+                    if (Math.abs(v) > Math.abs(pico)) pico = v;
+                } else {
+                    fijarAlarma(false);
+                    // Si no hay sismo simulado activo, el pico rastrea el voltaje actual
+                    if (sismoInicio < 0) {
+                        pico = Math.abs(v);
+                    }
+                }
+
+                muestras.push({ t: t, v: v });
+                while (muestras.length && muestras[0].t < t - VENTANA) {
+                    muestras.shift();
+                }
+
+                if (t - ultimoDom > 0.05) {
+                    ultimoDom = t;
+                    actualizarTransistor(conduce);
+                    demoComparador.textContent = conduce ? '1' : '0';
+                    demoDigital.textContent = binario(v);
+                    demoAnalog.textContent = Math.abs(pico).toFixed(2) + ' V';
+                    demoContador.textContent = String(disparos);
+                    demoLatch.textContent = alarma ? 'ACTIVADA' : 'DESACTIVADA';
+                    readoutLatch.classList.toggle('alarm', alarma);
+                    actualizarLeds(v);
+                }
+
+                dibujarSismografo(t);
+            }
+
+            // ---------- Controles ----------
+            function cambiarModo(nuevo) {
+                modo = nuevo;
+                btnSerie.classList.toggle('activo', modo === 'serie');
+                btnSerie.classList.toggle('inactivo', modo !== 'serie');
+                btnParalelo.classList.toggle('activo', modo === 'paralelo');
+                btnParalelo.classList.toggle('inactivo', modo !== 'paralelo');
+                dibujarLazo();
+            }
+
+            btnSerie.addEventListener('click', function () { cambiarModo('serie'); });
+            btnParalelo.addEventListener('click', function () { cambiarModo('paralelo'); });
+
+            btnSismo.addEventListener('click', function () {
+                reiniciar();
+                picoSismo = calcularPicoPaquete();
+                sismoInicio = tReloj;
+            });
+
+            btnReset.addEventListener('click', reiniciar);
+
+            rangoSismo.addEventListener('input', function () {
+                intensidad = parseFloat(rangoSismo.value) || 0;
+                valSismo.textContent = intensidad + ' %';
+                amplitud = 0.5 + (intensidad / 100) * 4.2;
+                reiniciar();
+            });
+
+            demoUmbral.addEventListener('input', function () {
+                umbral = parseFloat(demoUmbral.value) || 2.5;
+                demoUmbralValor.textContent = umbral.toFixed(1) + ' V';
+                reiniciar();
+            });
+
+            demoBits.addEventListener('change', function () {
+                bits = parseInt(demoBits.value, 10) || 8;
+                construirLeds();
+                actualizarLeds(senalActual);
+                demoDigital.textContent = binario(senalActual);
+            });
+
+            // ---------- Conexión Móvil y Código QR ----------
+            function cargarInfoServidor() {
+                fetch('/api/info')
+                    .then(function (r) { return r.json(); })
+                    .then(function (info) {
+                        if (info && info.urlMovil) {
+                            urlControlMovil = info.urlMovil;
+                            if (urlTextoCelular) urlTextoCelular.textContent = info.urlMovil;
+                            if (imgQr) {
+                                imgQr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(info.urlMovil);
+                            }
+                        }
+                    })
+                    .catch(function () {
+                        var fallback = 'http://' + (location.hostname || 'localhost') + ':3000/sensor/control.html';
+                        if (urlTextoCelular) urlTextoCelular.textContent = fallback;
+                        if (imgQr) {
+                            imgQr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(fallback);
+                        }
+                    });
+            }
+
+            function conectarWebSocketCelular() {
+                var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+                var host = location.host || 'localhost:3000';
+                try {
+                    wsCelular = new WebSocket(proto + '//' + host);
+                    wsCelular.onopen = function () {
+                        if (dotCelular) {
+                            dotCelular.classList.add('activo');
+                            dotCelular.title = 'Celular / Servidor Enlazado';
+                        }
+                    };
+                    wsCelular.onmessage = function (ev) {
+                        try {
+                            var data = JSON.parse(ev.data);
+                            if (data && typeof data.v === 'number') {
+                                voltajeCelular = Math.max(0, Math.min(5, data.v));
+                                ultimaLecturaCelular = performance.now();
+                                if (dotCelular) dotCelular.classList.add('activo');
+                            }
+                        } catch (err) {}
+                    };
+                    wsCelular.onclose = function () {
+                        if (dotCelular) dotCelular.classList.remove('activo');
+                        setTimeout(conectarWebSocketCelular, 2500);
+                    };
+                    wsCelular.onerror = function () {
+                        if (dotCelular) dotCelular.classList.remove('activo');
+                    };
+                } catch (e) {
+                    setTimeout(conectarWebSocketCelular, 3000);
+                }
+            }
+
+            if (btnConectarCelular && modalQr) {
+                btnConectarCelular.addEventListener('click', function () {
+                    modalQr.style.display = 'flex';
+                });
+            }
+            if (btnCerrarModal && modalQr) {
+                btnCerrarModal.addEventListener('click', function () {
+                    modalQr.style.display = 'none';
+                });
+            }
+            if (modalQr) {
+                modalQr.addEventListener('click', function (e) {
+                    if (e.target === modalQr) modalQr.style.display = 'none';
+                });
+            }
+
+            // ---------- Arranque ----------
+            valSismo.textContent = intensidad + ' %';
+            demoUmbralValor.textContent = umbral.toFixed(1) + ' V';
+            construirLeds();
+            reiniciar();
+            cargarInfoServidor();
+            conectarWebSocketCelular();
+            window.requestAnimationFrame(bucle);
+        })();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "natu-sismos-presentacion",
+  "version": "1.0.0",
+  "description": "Presentacion interactiva Proyecto NATU con conexion de sensor celular en tiempo real",
+  "main": "sensor/server.js",
+  "scripts": {
+    "start": "node sensor/server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
+

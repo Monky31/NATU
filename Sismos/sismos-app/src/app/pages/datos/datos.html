@@ -1,0 +1,184 @@
+<app-natu-header
+  [enlaces]="[
+    { ruta: '/', texto: '🏠 Inicio' },
+    { ruta: '/registro', texto: '📝 Registrarse' },
+  ]"
+/>
+
+<main class="info-page">
+  <section class="info-hero">
+    <p class="info-kicker">🗄️ Base de datos de la aplicación</p>
+    <h1>Datos guardados</h1>
+    <p class="info-intro">
+      Aquí puedes ver toda la información guardada en el navegador con localStorage:
+      los usuarios registrados, los correos y las contraseñas. Es la misma
+      información que usa la app al iniciar sesión.
+    </p>
+
+    <div class="info-hero-meta">
+      <span>👥 {{ auth.usuarios().length }} usuario(s) registrado(s)</span>
+      <span>{{ auth.logueado() ? '🟢 Sesión iniciada' : '⚪ Sin sesión' }}</span>
+    </div>
+  </section>
+
+  <div class="info-alert" style="margin-top: 24px;">
+    <strong>⚠️ Proyecto educativo:</strong> las contraseñas se guardan tal cual se
+    escriben (en texto plano), igual que en la versión original en HTML. En una
+    aplicación real nunca se debe guardar una contraseña sin cifrar.
+  </div>
+
+  <!-- ============ USUARIOS REGISTRADOS ============ -->
+  <section class="info-card" style="margin-top: 24px;">
+    <h2><span class="info-num">👥</span>Usuarios registrados</h2>
+
+    <p>
+      La clave <code>usuarios</code> del localStorage guarda la lista de cuentas.
+      Haz clic en el botón para mostrar u ocultar las contraseñas.
+    </p>
+
+    @if (auth.usuarios().length === 0) {
+      <div class="noticias-vacio" style="margin-top: 12px;">
+        Todavía no hay usuarios registrados.
+        <a routerLink="/registro">Crear una cuenta</a>
+      </div>
+    } @else {
+      <div class="acciones-tabla">
+        <button type="button" class="btn-verde" (click)="alternarPassword()">
+          {{ mostrarPassword() ? '🙈 Ocultar contraseñas' : '👁️ Mostrar contraseñas' }}
+        </button>
+        <button type="button" class="btn-azul" (click)="refrescar()">🔄 Refrescar</button>
+      </div>
+
+      <div class="info-tabla-wrap">
+        <table class="info-tabla">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Correo</th>
+              <th>Contraseña</th>
+              <th>Fecha de registro</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (usuario of auth.usuarios(); track usuario.username) {
+              <tr>
+                <td><strong>{{ usuario.username }}</strong></td>
+                <td>{{ usuario.email }}</td>
+                <td>
+                  <code class="password-cell">
+                    {{ mostrarPassword() ? usuario.password : '••••••••' }}
+                  </code>
+                </td>
+                <td>{{ usuario.fechaRegistro }}</td>
+                <td>
+                  <button type="button" class="btn-rojo" (click)="eliminar(usuario.username)">
+                    🗑️ Eliminar
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+
+  <!-- ============ CONTENIDO CRUDO DEL LOCALSTORAGE ============ -->
+  <section class="info-card">
+    <h2><span class="info-num">📦</span>Contenido del localStorage (en crudo)</h2>
+
+    <p>
+      Estas son todas las claves que la aplicación guarda en el navegador. Los
+      usuarios están en <code>usuarios</code>, la sesión en
+      <code>isLoggedIn</code> y los datos de la versión HTML anterior en
+      <code>userData</code>.
+    </p>
+
+    @if (entradas().length === 0) {
+      <div class="noticias-vacio" style="margin-top: 12px;">
+        El localStorage está vacío todavía.
+      </div>
+    } @else {
+      @for (entrada of entradas(); track entrada.clave) {
+        <div class="clave-entrada">
+          <h3>🔑 {{ entrada.clave }}</h3>
+          <pre class="valor-entrada">{{ entrada.valor }}</pre>
+        </div>
+      }
+    }
+  </section>
+
+  <!-- ============ CÓMO VERLO MANUALMENTE ============ -->
+  <section class="info-card">
+    <h2><span class="info-num">🔍</span>¿Cómo ver los datos manualmente?</h2>
+
+    <p>
+      El localStorage es una pequeña base de datos que vive <strong>dentro de tu
+      navegador</strong>. Puedes inspeccionarla en cualquier momento:
+    </p>
+
+    <ol>
+      <li>
+        Abre la página y presiona <strong>F12</strong> (o clic derecho →
+        "Inspeccionar") para abrir las herramientas del desarrollador.
+      </li>
+      <li>
+        Ve a la pestaña <strong>Application</strong> (en español: "Aplicación").
+        Si no la ves, haz clic en el símbolo <strong>≫</strong> para mostrar más pestañas.
+      </li>
+      <li>
+        En el menú lateral izquierdo, busca <strong>Storage → Local Storage</strong>
+        (Almacenamiento → Almacenamiento local) y haz clic en
+        <code>http://localhost:4200</code>.
+      </li>
+      <li>
+        Ahí aparece la tabla con todas las claves y valores: haz clic en la fila
+        <code>usuarios</code> para ver el usuario y la contraseña guardados.
+      </li>
+    </ol>
+
+    <h3>Otra forma: la consola</h3>
+    <p>
+      En la pestaña <strong>Console</strong> (consola) de las mismas herramientas,
+      puedes escribir estos comandos y presionar Enter:
+    </p>
+
+    <pre class="valor-entrada">// Ver los usuarios registrados en JSON
+JSON.parse(localStorage.getItem('usuarios'))
+
+// Ver la clave de la versión anterior (HTML puro)
+localStorage.getItem('userData')
+
+// Ver si hay sesión iniciada
+localStorage.getItem('isLoggedIn')
+
+// Borrar todo
+localStorage.clear()</pre>
+  </section>
+
+  <!-- ============ ZONA PELIGROSA ============ -->
+  <section class="info-card">
+    <h2><span class="info-num">🧹</span>Borrar todos los datos</h2>
+
+    <p>
+      Elimina los usuarios, la sesión y los datos de recuperación del navegador.
+      Esta acción no se puede deshacer.
+    </p>
+
+    @if (!confirmandoBorrado()) {
+      <button type="button" class="btn-rojo" (click)="pedirConfirmacion()">
+        🗑️ Borrar todos los datos
+      </button>
+    } @else {
+      <div class="info-alert">
+        <strong>¿Seguro?</strong> Se borrarán los {{ auth.usuarios().length }} usuario(s) y
+        toda la información guardada.
+        <div class="acciones-tabla" style="margin-top: 10px;">
+          <button type="button" class="btn-rojo" (click)="borrarTodo()">Sí, borrar todo</button>
+          <button type="button" class="btn-azul" (click)="cancelarBorrado()">Cancelar</button>
+        </div>
+      </div>
+    }
+  </section>
+</main>

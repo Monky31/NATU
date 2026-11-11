@@ -1,0 +1,70 @@
+@startuml
+!pragma layout smetana
+
+hide circle
+skinparam classAttributeIconSize 0
+
+class Owner {
+  - nombreUsuario : String
+  - 
+  --
+  + editarPagina()
+  + asignarRoles()
+  + administrarUsuarios()
+}
+
+class Sismologo {
+  - nombre : String
+  - especialidad : String
+  --
+  + registrarSismo()
+  + actualizarMapa()
+  + generarNotificacion()
+}
+
+class Poblacion {
+  - idUsuario : String
+  - ubicacion : String
+  --
+  + visualizarMapa()
+  + consultarHistorial()
+  + recibirNotificacion()
+}
+
+class MapaInteractivo {
+  - idMapa : String
+  - datosSismicos : String
+  - datosHistoricos : String
+  --
+  + mostrarSismoTiempoReal()
+  + simularEpicentro()
+  + mostrarHistorial()
+}
+
+class Notificaciones {
+  - idNotificacion : String
+  - mensaje : String
+  - fechaHora : String
+  --
+  + enviarAlerta()
+  + mostrarAviso()
+}
+
+' Relaciones
+Owner "1" -- "0..*" Sismologo : <<asigna permisos>>
+Owner "1" -- "0..*" Poblacion : <<gestiona acceso>>
+
+Sismologo "1" -- "1" MapaInteractivo : <<actualiza>>
+Sismologo "1" -- "0..*" Poblacion : <<informa a>>
+Sismologo "1" -- "0..*" Notificaciones : <<crea y envia>>
+
+Poblacion "1" -- "1" MapaInteractivo : <<consulta>>
+Poblacion "1" -- "0..*" Notificaciones : <<recibe>>
+
+MapaInteractivo "1" -- "1" Sismologo : <<es actualizado por>>
+MapaInteractivo "1" -- "0..*" Poblacion : <<es consultado por>>
+
+Notificaciones "1" -- "1" Sismologo : <<son creadas por>>
+Notificaciones "1" -- "0..*" Poblacion : <<son recibidas por>>
+
+@enduml

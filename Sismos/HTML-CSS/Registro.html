@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Sismos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="styles/Sismos1.css">
+    <link rel="stylesheet" href="styles/Navegacion.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo-container">
+            <span class="logo-icon">🌿</span>
+            <span class="logo-text">NATU</span>
+        </div>
+
+        <div class="header-actions" data-nav-autologout>
+            <a href="Sismos.html" class="nav-btn">🏠 Inicio</a>
+            <button type="button" class="nav-btn" data-nav="back">← Volver</button>
+        </div>
+    </header>
+
+    <main class="hero-section registration-page">
+        
+        <div class="promo-text">
+            <h1>Únete a nosotros</h1>
+            <h1>para</h1>
+            <h1>descubrir</h1>
+            <h1>nuestra</h1>
+            <h1>pagina</h1>
+        </div>
+
+        <div class="registration-form-panel">
+            <div class="form-header">
+                <h2 class="form-title">ÚNETE A NOSOTROS</h2>
+                <div class="form-logo-container">
+                    <span class="logo-icon green-icon">🌿</span>
+                    <span class="logo-text green-text">NATU</span>
+                </div>
+            </div>
+            
+            <form id="registroForm" class="registration-form">
+                
+                <label for="username" class="white-text">nombre de usuario</label>
+                <input type="text" id="username" name="username" required>
+                
+                <label for="email" class="white-text">Correo</label>
+                <input type="email" id="email" name="email" placeholder="nombre@gmail.com" required>
+                <small class="white-text" style="display:block; margin-top:-6px; margin-bottom:10px; font-size:0.8em; opacity:0.9;">
+                    Usa un correo real: allí llegará el aviso cuando inicies sesión.
+                </small>
+                
+                <label for="password" class="white-text">Contraseña</label>
+                <input type="password" id="password" name="password" required>
+
+                <nav class="user-actions">
+                    <button type="submit" class="button is-black">Continuar</button> 
+                    <a href="Iniciar-Sesion.html" class="button is-link">Iniciar Sesión</a>
+                </nav>
+
+                <p class="terms-text white-text">
+                    si continuas, aceptas los 
+                    <a href="Seguridad.html">términos y condiciones</a> 
+                    de nuestra página
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <script src="script/Navegacion.js"></script>
+    <script src="script/Registro.js"></script>
+</body>
+</html>

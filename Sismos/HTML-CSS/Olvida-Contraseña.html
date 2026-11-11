@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña - NATU</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="styles/Sismos1.css">
+    <link rel="stylesheet" href="styles/Navegacion.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo-container">
+            <span class="logo-icon">🌿</span>
+            <span class="logo-text">NATU</span>
+        </div>
+
+        <div class="header-actions" data-nav-autologout>
+            <a href="Sismos.html" class="nav-btn">🏠 Inicio</a>
+            <button type="button" class="nav-btn" data-nav="back">← Volver</button>
+        </div>
+    </header>
+
+    <main class="hero-section registration-page">
+        <div class="promo-text">
+            <h1>Recupera</h1>
+            <h1>tu</h1>
+            <h1>cuenta</h1>
+            <h1>en</h1>
+            <h1>NATU</h1>
+        </div>
+
+        <div class="registration-form-panel">
+            <div class="form-header">
+                <h2 class="form-title">RECUPERAR CONTRASEÑA</h2>
+            </div>
+
+            <form id="emailForm" class="registration-form">
+                <p class="white-text recovery-help">
+                    Escribe el correo con el que te registraste. Te enviaremos un código de
+                    verificación de 6 dígitos.
+                </p>
+
+                <label for="email" class="white-text">Correo electrónico</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="nombre@gmail.com"
+                    autocomplete="email"
+                    required
+                >
+
+                <nav class="user-actions">
+                    <button type="submit" class="button is-black">Enviar código</button>
+                </nav>
+            </form>
+
+            <form id="resetForm" class="registration-form" hidden>
+                <p id="resetIntro" class="white-text recovery-help"></p>
+
+                <label for="code" class="white-text">Código de verificación</label>
+                <input
+                    type="text"
+                    id="code"
+                    name="code"
+                    inputmode="numeric"
+                    maxlength="6"
+                    pattern="[0-9]{6}"
+                    placeholder="123456"
+                    autocomplete="one-time-code"
+                    required
+                >
+
+                <label for="password" class="white-text">Nueva contraseña</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    minlength="6"
+                    placeholder="Mínimo 6 caracteres"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <label for="confirmPassword" class="white-text">Confirmar contraseña</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    minlength="6"
+                    placeholder="Repite la nueva contraseña"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <nav class="user-actions">
+                    <button type="submit" class="button is-black">Cambiar contraseña</button>
+                    <button type="button" id="resendBtn" class="button is-link">Reenviar código</button>
+                </nav>
+
+                <button type="button" id="changeEmailBtn" class="recovery-link">
+                    Usar otro correo
+                </button>
+            </form>
+
+            <div id="responseMessage" class="notification" style="display: none;"></div>
+
+            <div class="footer-text">
+                <a href="Iniciar-Sesion.html">⬅ Volver al inicio de sesión</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="script/EmailConfig.js"></script>
+    <script src="script/Navegacion.js"></script>
+    <script src="script/Recuperar-Contrasena.js"></script>
+</body>
+</html>

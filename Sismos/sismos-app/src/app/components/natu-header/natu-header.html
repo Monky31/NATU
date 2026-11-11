@@ -1,0 +1,22 @@
+<header class="main-header">
+  <div class="logo-container">
+    <span class="logo-icon">🌿</span>
+    <span class="logo-text">NATU</span>
+  </div>
+
+  <div class="header-actions">
+    @for (enlace of enlaces(); track enlace.ruta) {
+      <a [routerLink]="enlace.ruta" class="nav-btn">{{ enlace.texto }}</a>
+    }
+
+    @if (mostrarVolver()) {
+      <button type="button" class="nav-btn" (click)="volver()">← Volver</button>
+    }
+
+    @if (auth.logueado()) {
+      <button type="button" class="nav-btn nav-btn-danger" (click)="cerrarSesion()">
+        Cerrar sesión
+      </button>
+    }
+  </div>
+</header>
